@@ -4,6 +4,7 @@
 
 ### Base de dados
 Nome da base de dados: `dawtg2`
+
 Configurar em `DB_DATABASE` no ficheiro `.env`
 
 ### Seeders e migrations
