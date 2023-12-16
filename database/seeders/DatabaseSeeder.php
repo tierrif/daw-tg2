@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Exception;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +12,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $token = getenv('METRO_LISBOA_TOKEN');
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        if (!$token) throw new Exception('The Metro\'s API is required in order to seed the database. '
+            . 'Please set the METRO_LISBOA_TOKEN environment variable.');
+
+        $token = 'Bearer ' . $token;
+
+        $this->call(StationSeeder::class, false, ['token' => $token]);
+        $this->call(LineSeeder::class, false, ['token' => $token]);
+        $this->call(DestinationSeeder::class, false, ['token' => $token]);
+        $this->call(StationLineSeeder::class, false, ['token' => $token]);
     }
 }
