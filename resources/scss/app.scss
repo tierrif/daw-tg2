@@ -26,3 +26,43 @@ $primary: #e43a2e;
 .station-search {
     text-align: right;
 }
+
+.line .col {
+    margin: 7px;
+    flex: 0 0;
+    padding: 0;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.line .line-box {
+    border-radius: 8px;
+    padding: 5px;
+    display: block;
+    width: 200px;
+}
+
+.line.amarela .line-box {
+    background: #ffdd03;
+}
+
+.line.vermelha .line-box {
+    background: #FF4040;
+    color: #fff;
+}
+
+.line.azul .line-box {
+    background: #0066FF;
+    color: #fff;
+}
+
+.line.verde .line-box {
+    background: #00B13C;
+    color: #fff;
+}
+
+.checkmark {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
