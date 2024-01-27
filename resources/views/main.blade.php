@@ -19,7 +19,7 @@
             </a>
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-                    @if ($page === 'frequentuser')
+                    @if (Auth::check())
                         <a class="nav-link" href="#scrollspyHeading1">Sair</a>
                     @else
                         <a class="nav-link" href="#scrollspyHeading1">Entrar</a>
@@ -28,15 +28,8 @@
             </ul>
         </div>
     </nav>
-    @if ($page === 'home')
-        <x-home />
-    @elseif ($page === 'login')
-        <x-login />
-    @elseif ($page === 'frequentuser')
-        <x-frequent-user />
-    @else
-        <x-not-found />
-    @endif
+
+    @yield('content')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
