@@ -12,10 +12,18 @@
 <body>
     <nav class="navbar bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand">PVML</a>
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="{{ mix('resources/assets/logo.png') }}" alt="Bootstrap"
+                    width="30" height="30" />
+                <h4 class="my-0 logo-text">PVML</h4>
+            </a>
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#scrollspyHeading1">Login</a>
+                    @if ($page === 'frequentuser')
+                        <a class="nav-link" href="#scrollspyHeading1">Sair</a>
+                    @else
+                        <a class="nav-link" href="#scrollspyHeading1">Entrar</a>
+                    @endif
                 </li>
             </ul>
         </div>
