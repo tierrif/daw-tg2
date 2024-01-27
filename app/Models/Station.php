@@ -10,7 +10,10 @@ class Station extends Model
 {
     use HasFactory;
 
-    public function users() : BelongsToMany{
+    protected $primaryKey = 'id';
+
+    public function users(): BelongsToMany
+    {
         return $this->belongsToMany(User::class, 'frequentstations', 'stationId', 'userId');
     }
 }

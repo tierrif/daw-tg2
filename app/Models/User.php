@@ -10,11 +10,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use HasFactory;
+
     protected $table = 'users';
+    protected $primaryKey = 'id';
+
     protected $fillable = ['name', 'email', 'password', 'lastName', 'firstName', 'balance'];
 
 
-    public function stations() : BelongsToMany{
+    public function stations(): BelongsToMany
+    {
         return $this->belongsToMany(Station::class, 'frequentstations', 'userId', 'stationId');
     }
 }
