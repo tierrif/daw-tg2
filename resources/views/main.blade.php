@@ -20,9 +20,15 @@
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
                     @if (Auth::check())
-                        <a class="nav-link" href="#scrollspyHeading1">Sair</a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <a class="nav-link" href="/logout" onclick="event.preventDefault();
+                                                this.closest('form').submit();">Sair</a>
+                        </form>
+
                     @else
-                        <a class="nav-link" href="#scrollspyHeading1">Entrar</a>
+                        <a class="nav-link" href="/login">Entrar</a>
                     @endif
                 </li>
             </ul>
