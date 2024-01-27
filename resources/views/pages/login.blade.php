@@ -14,7 +14,7 @@
 
         <!-- Password -->
         <div>
-            <label for="password">Email: </label>
+            <label for="password">Password: </label>
             <input type="password" name="password" autocomplete="current-password"/>
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -23,12 +23,6 @@
         <div>
             <input type="checkbox" id="remember_me" name="remember_me" >
             <label for="remember_me">Remember me</label>
-        </div>
-
-        <div>
-            <a href="{{ route('password.request') }}">
-                Forgot your password?
-            </a>
         </div>
 
         <div>
