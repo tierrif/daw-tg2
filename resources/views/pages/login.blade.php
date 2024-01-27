@@ -1,4 +1,6 @@
 @extends('main')
+
+@section('content')
 <div>
     <form method="POST" action="{{ route('login') }}">
         @csrf
@@ -14,7 +16,6 @@
         <div>
             <label for="password">Email: </label>
             <input type="password" name="password" autocomplete="current-password"/>
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
@@ -33,6 +34,6 @@
         <div>
             <input type="submit" name="Login">
         </div>
-        </div>
     </form>
 </div>
+@endsection

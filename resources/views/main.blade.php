@@ -24,7 +24,15 @@
                             @csrf
 
                             <a class="nav-link" href="/logout" onclick="event.preventDefault();
-                                                this.closest('form').submit();">Sair</a>
+                                                this.closest('form').submit();">
+                                @if(!$username)
+                                    Sair
+                                @else
+                                    {{$username}}
+                                @endif
+
+
+                            </a>
                         </form>
 
                     @else

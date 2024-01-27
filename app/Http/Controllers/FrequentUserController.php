@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Line;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class FrequentUserController extends Controller
 {
@@ -12,7 +15,10 @@ class FrequentUserController extends Controller
     public function index()
     {
         //
-        return view('pages.frequent-user');
+        $user = Auth::getUser();
+        $name = $user['name'];
+        $lines = Line::All();
+        return view('pages.frequent-user', ['username' => $name, 'lines' => $lines]);
     }
 
     /**
