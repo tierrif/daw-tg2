@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('frequentusers', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
 
             // TODO: Check if this is working in terms of authentication.
@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('name'); // Or as previously known, 'username'.
             $table->string('email')->unique();
             $table->string('password');
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
             $table->rememberToken();
 
             // FrequentUser attributes.
@@ -34,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('frequentusers');
+        Schema::dropIfExists('users');
     }
 };
