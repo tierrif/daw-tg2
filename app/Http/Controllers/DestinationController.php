@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
-class StationController extends Controller
+class DestinationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,18 +25,9 @@ class StationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $line)
+    public function show(string $id)
     {
-        $token = getenv('METRO_LISBOA_TOKEN');
-
-        if (!$token) throw new Exception('The Metro\'s API is required in order to seed the database. '
-        . 'Please set the METRO_LISBOA_TOKEN environment variable.');
-        $response = Http::withOptions(['verify' => false])
-            ->withHeader('Authorization', 'Bearer ' . $token)->acceptJson()
-            ->get('https://api.metrolisboa.pt:8243/estadoServicoML/1.0.1/tempoEspera/Linha/' . $line)
-            ->json();
-
-        return $response;
+        //
     }
 
     /**

@@ -23,10 +23,6 @@ $primary: #e43a2e;
     text-align: left;
 }
 
-.station-search {
-    text-align: right;
-}
-
 .line .col {
     margin: 7px;
     flex: 0 0;
@@ -65,4 +61,35 @@ $primary: #e43a2e;
     justify-content: center;
     align-items: center;
     display: flex;
+}
+
+.station-search-parent {
+    text-align: left;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.station-search {
+    width: 300px;
+}
+
+#search-btn {
+    margin-top: 12px;
+    float: right;
+}
+
+#search-btn:hover {
+    color: #fff;
+}
+
+.hidden {
+    display: none;
+}
+
+.secondary-card {
+    width: 80%;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }

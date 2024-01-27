@@ -16,16 +16,7 @@ use App\Http\Controllers\FrequentUserController;
 |
 */
 
-/*Route::get('/', function () {
-    return view('index', ['page' => 'home']);
-});*/
-
 Route::get('/', [HomeController::class, 'index']);
-
-/*Route::get('/dashboard', function () {
-    return view('pages.frequent-user');
-    //return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');*/
 
 Route::get('/dashboard', [FrequentUserController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 

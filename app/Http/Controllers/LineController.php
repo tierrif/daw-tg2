@@ -21,6 +21,7 @@ class LineController extends Controller
             ->withHeader('Authorization', 'Bearer '.$token)->acceptJson()
             ->get('https://api.metrolisboa.pt:8243/estadoServicoML/1.0.1/estadoLinha/todos')
             ->json();
+            
         return $response;
     }
 
