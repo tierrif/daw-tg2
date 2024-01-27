@@ -5,5 +5,12 @@ $primary: #e43a2e;
 @import 'bootstrap/scss/bootstrap';
 
 .logo-text {
-    margin-left: 7px
+    margin-left: 7px;
+    text-align: left;
+}
+
+.site-title {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
 }
