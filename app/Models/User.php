@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;   
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -12,4 +13,8 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $fillable = ['name', 'email', 'password', 'lastName', 'firstName', 'balance'];
 
+
+    public function stations() : BelongsToMany{
+        return $this->belongsToMany(Station::class, 'frequentstations', 'userId', 'stationId');
+    }
 }

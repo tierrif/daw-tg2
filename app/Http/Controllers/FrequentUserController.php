@@ -3,22 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Line;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
 class FrequentUserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
         $user = Auth::getUser();
         $name = $user['name'];
-        $lines = Line::All();
-        return view('pages.frequent-user', ['username' => $name, 'lines' => $lines]);
+        $lines = Line::all();
+        $balance = $user['balance'];
+        $stations = User::with('stations')->get()->firstWhere('email', $user['email'])['stations'];
+        return view('pages.frequent-user', ['username' => $name, 'lines' => $lines, 'balance' => $balance, 'stations' => $stations]);
     }
 
     /**
