@@ -3,21 +3,22 @@
 @section('content')
     <div class="container">
         <div class="card">
-            <h4>Saldo: </h4>
+            <div class="card-body row justify-content-around">
+                <div class="lines col">
+                    <h4>Saldo: {{ $balance  }} €</h4>
+                </div>
+                <div class="add-balance col">
+                    <img id="plusBalance" src="{{ mix("/resources/assets/add-plus-button.png")  }}" alt="plus balance"
+                         title="plus balance" width="30px">
+                </div>
+            </div>
         </div>
         <div class="card main-card">
             <div class="card-body row justify-content-around">
                 <div class="lines col">
-                    @foreach ($lines as $line)
-                        <div class="row card line {{ $line->stringId }}">
-                            <div class="card-body">
-                                <div class="col">
-                                    <span>Linha {{ $line->displayName }}</span>
-                                </div>
-                                <div class="col">
-
-                                </div>
-                            </div>
+                    @foreach($stations as $s)
+                        <div class="">
+                            <span>Estação:  {{ $s->displayName }}</span>
                         </div>
                     @endforeach
                 </div>
@@ -26,5 +27,12 @@
                 </div>
             </div>
         </div>
+
+        <button style="position:fixed;
+            right:0;
+            bottom:0;">
+            <img id="plusBalance" src="{{ mix("/resources/assets/add-plus-button.png")  }}" alt="plus balance"
+                 title="plus balance" width="30px">
+        </button>
     </div>
 @endsection
