@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Logging\Exception;
 
-class InfoController extends Controller
+class LineController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,17 +14,14 @@ class InfoController extends Controller
     public function index()
     {
         $token = getenv('METRO_LISBOA_TOKEN');
-        echo $token;
 
         if (!$token) throw new Exception('The Metro\'s API is required in order to seed the database. '
             . 'Please set the METRO_LISBOA_TOKEN environment variable.');
         $response = Http::withOptions(['verify' => false])
-            ->withHeader('Authorization', $token)->acceptJson()
-            //->get('https://api.metrolisboa.pt:8243/estadoServicoML/1.0.1/estadoLinha/todos')
+            ->withHeader('Authorization', 'Bearer '.$token)->acceptJson()
             ->get('https://api.metrolisboa.pt:8243/estadoServicoML/1.0.1/estadoLinha/todos')
-            ->json();//['resposta'];
-        print_r($response);
-
+            ->json();
+        return $response;
     }
 
     /**

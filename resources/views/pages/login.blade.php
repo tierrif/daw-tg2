@@ -21,7 +21,7 @@
 
         <!-- Remember Me -->
         <div>
-            <input type="checkbox" name="remember_me" >
+            <input type="checkbox" id="remember_me" name="remember_me" >
             <label for="remember_me">Remember me</label>
         </div>
 
