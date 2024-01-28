@@ -6,6 +6,8 @@ use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\LineController;
 use App\Http\Controllers\RegisteredTripsAnalyticsController;
 use App\Http\Controllers\StationController;
+use App\Http\Controllers\StationSearchAnalyticsController;
+use App\Http\Controllers\WebsiteVisitorsAnalyticsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,3 +36,5 @@ Route::resource('balance', BalanceController::class);
 Route::resource('frequentstations', FrequentStationsController::class);
 Route::resource('destination', DestinationController::class);
 Route::resource('registedtrips', RegisteredTripsAnalyticsController::class);
+Route::resource('stationssearch', StationSearchAnalyticsController::class);
+Route::resource('websitevisitors', WebsiteVisitorsAnalyticsController::class);

@@ -25,6 +25,17 @@ window.onload = async () => {
         const station = JSON.parse(document.querySelector('#stations').value)
             .find((station) => station.displayName === selectedStation.value)
 
+
+        //Add to analytics
+        let stationId = station.id
+        let response = await fetch('http://localhost:8000/api/stationssearch', {
+            method: 'POST',
+            body: JSON.stringify({'station_id' : stationId, 'userAgent' : window.navigator.userAgent}),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        })
+
+
+
         // Validate the input.
         if (!station) {
             selectedStation.classList.add('is-invalid')

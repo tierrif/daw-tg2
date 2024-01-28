@@ -24,7 +24,7 @@ class StationSearchAnalyticsController extends Controller
     {
         $stationId = $request->input('station_id');
         $userAgent = $request->input('userAgent');
-        DB::table('website_visitors_analytics')->insert(['station_id' => $stationId, 'user_agent' => $userAgent]);
+        DB::table('stations_search_analytics')->insert(['station_id' => $stationId, 'user_agent' => $userAgent, 'created_at' => date('Y-m-d H:i:s')]);
         return response("Insert with success");
     }
 

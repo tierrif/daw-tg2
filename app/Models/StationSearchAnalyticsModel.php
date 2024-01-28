@@ -9,4 +9,5 @@ class StationSearchAnalyticsModel extends Model
 {
     use HasFactory;
     public $table = 'stations_search_analytics';
+    public $fillable = ['station_id', 'user_agent'];
 }

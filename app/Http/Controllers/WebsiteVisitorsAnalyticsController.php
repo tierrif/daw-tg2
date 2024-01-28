@@ -24,7 +24,7 @@ class WebsiteVisitorsAnalyticsController extends Controller
     {
         $urlVisited = $request->input('url_visited');
         $userAgent = $request->input('userAgent');
-        DB::table('website_visitors_analytics')->insert(['url_visited' => $urlVisited, 'user_agent' => $userAgent]);
+        DB::table('website_visitors_analytics')->insert(['url_visited' => $urlVisited, 'user_agent' => $userAgent, 'created_at' => date('Y-m-d H:i:s')]);
         return response("Insert with success");
     }
 
