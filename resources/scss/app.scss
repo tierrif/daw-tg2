@@ -31,11 +31,17 @@ $primary: #e43a2e;
     margin-left: 0;
 }
 
-.line .line-box {
+.line-box {
     border-radius: 8px;
     padding: 5px;
     display: block;
     width: 200px;
+}
+
+.line-box-sm {
+    width: auto;
+    padding: 3px;
+    display: inline-block;
 }
 
 .line.amarela .line-box {

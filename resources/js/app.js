@@ -46,10 +46,9 @@ window.onload = async () => {
             const stationResults = await Promise.all((await (await fetch(`http://localhost:8000/api/station/${line.stringId}`)).json())
                 .resposta.map((result) => ({ ...result, line }))
                 .map(async (result) => ({
-                    ...result, destinationName: (await ((await fetch(`http://localhost:8000/api/destination/${result.destination}`)).json()))
+                    ...result, destinationInfo: (await ((await fetch(`http://localhost:8000/api/destination/${result.destino}`)).json()))
                 })
             ))
-            // TODO: add destination controller
 
             stops.push(...stationResults.filter((result) => result.stop_id === station.stringId))
         }
@@ -60,8 +59,41 @@ window.onload = async () => {
         const stationInfo = document.querySelector('#station-info')
         stationInfo.querySelector('.card-header').innerHTML = 'Informações para <b>' + station.displayName + '</b>'
 
-        const cardBody = stationInfo.querySelector('.card-body')
-        stops.forEach((stop) => stop)
+        const cardText = stationInfo.querySelector('.card-text')
+        cardText.innerHTML = ''
+
+        let previousLine
+        let previousLineCol
+        for (const stop of stops) {
+            // Display the line if it's different.
+            if (previousLine !== stop.line.id) {
+                previousLine = stop.line.id
+                previousLineCol = document.createElement('div')
+                previousLineCol.classList.add('col')
+
+                const lineIndicatorWrapper = document.createElement('h5')
+                lineIndicatorWrapper.classList.add('line', stop.line.stringId)
+
+                const lineIndicator = document.createElement('span')
+                lineIndicator.classList.add('line-box', 'line-box-sm')
+                lineIndicator.innerText = stop.line.displayName
+
+                lineIndicatorWrapper.append(document.createTextNode('Linha: '))
+                lineIndicatorWrapper.append(lineIndicator)
+
+                previousLineCol.append(lineIndicatorWrapper)
+                cardText.append(previousLineCol)
+            }
+
+            // Display stop info.
+            const info = document.createElement('p')
+            info.innerHTML += `Sentido <b>${stop.destinationInfo.displayName}</b><br>`
+            const minutes = stop.tempoChegada1 / 60
+            info.innerHTML += `Tempo de chegada: <b>${Math.floor(minutes)}</b> min e <b>${Math.floor((minutes % 1) * 60)}</b> seg<br>`
+            info.innerHTML += `Comboio: <b>${stop.comboio}</b>`
+
+            previousLineCol.append(info)
+        }
 
         stationInfo.classList.remove('hidden')
 

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Destination;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class DestinationController extends Controller
 {
@@ -25,9 +28,9 @@ class DestinationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $apiId)
     {
-        //
+        return Destination::query()->where(['apiId' => $apiId])->first();
     }
 
     /**

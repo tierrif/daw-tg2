@@ -38,10 +38,13 @@
         <div id="station-info" class="hidden card secondary-card bg-light">
             <div class="card-header"></div>
             <div class="card-body">
+                <div class="card-text row">
+                </div>
             </div>
         </div>
     </div>
 
     <input id="lines" type="hidden" value="{{ json_encode($lines) }}" />
     <input id="stations" type="hidden" value="{{ json_encode($stations) }}" />
-<input id="warning_url" type="hidden" value="{{ mix('resources/assets/warning.png') }}" @endsection
+    <input id="warning_url" type="hidden" value="{{ mix('resources/assets/warning.png') }}" />
+@endsection
