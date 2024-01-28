@@ -30,13 +30,6 @@
                 </div>
             </div>
         </div>
-
-        <button style="position:fixed;
-            right:0;
-            bottom:0;">
-            <img id="plusBalance" src="{{ mix("/resources/assets/add-plus-button.png")  }}" alt="plus balance"
-                 title="plus balance" width="30px">
-        </button>
     </div>
 
 
@@ -75,17 +68,19 @@
                     <form id="addStationForm">
                         <div class="mb-3">
                             <label for="stations" class="col-form-label">Estacão:</label>
+                            <input class="form-control" list="stations" id="stationDataList"
+                                   placeholder="Pesquisar estação...">
                             <datalist id="stations">
                                 @foreach ($allStations as $s)
-                                    <option value="{{ $s->displayName }}"></option>
+                                    <option value="{{ $s['displayName'] }}"></option>
                                 @endforeach
                             </datalist>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary" style="color: white;">Adicionar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModalStation">Fechar</button>
+                    <button type="button" class="btn btn-primary" style="color: white;" id="stationAddBtn">Adicionar</button>
                 </div>
             </div>
         </div>

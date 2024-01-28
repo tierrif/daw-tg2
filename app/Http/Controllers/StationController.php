@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Station;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -13,7 +14,7 @@ class StationController extends Controller
      */
     public function index()
     {
-        //
+        return Station::all();
     }
 
     /**

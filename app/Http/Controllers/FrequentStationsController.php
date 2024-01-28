@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\DB;
 
 class FrequentStationsController extends Controller
 {
-    public function store(Request $request): int
+    public function store(Request $request)
     {
         // TODO: Add responses
-        $stringId = $request->input('stringId');
+        $stationId = $request->input('stationId');
         $userId = $request->input('userId');
-        $frequentStringId = Station::all()->firstWhere('stringId', $stringId);
-        return DB::table('frequentstations')->insertGetId(['stationId' => $frequentStringId['id'], 'userId' => $userId]);
+        DB::table('frequentstations')->insert(['stationId' => $stationId, 'userId' => $userId]);
+        return response("Added with sucess");
     }
 
     public function show(string $userId)
