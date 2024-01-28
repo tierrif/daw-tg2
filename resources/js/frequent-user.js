@@ -1,13 +1,3 @@
-import * as bootstrap from 'bootstrap'
-window.bootstrap = bootstrap
-
-import Alpine from 'alpinejs'
-
-window.Alpine = Alpine;
-
-Alpine.start();
-
-
 window.onload = async () => {
     console.log()
     document.querySelector('#submitBalanceForm').addEventListener('onclick', async (e) => {

@@ -1,27 +1,30 @@
 @extends('main')
 
+@section('head')
+    @vite(['resources/js/frequent-user.js'])
+@endsection
+
 @section('content')
-    @vite(['resources/js/frequent-user.js', 'resources/scss/app.scss'])
     <div class="container">
         <div class="card">
             <div class="card-body row justify-content-around">
                 <div class="lines col">
-                    <h4>Saldo: {{ $balance  }} €</h4>
+                    <h4>Saldo: {{ $balance }} €</h4>
                 </div>
                 <div class="add-balance col">
-                    <img id="plusBalance"  data-bs-toggle="modal" data-bs-target="#balanceModal" src="{{ mix("/resources/assets/add-plus-button.png")  }}" alt="plus balance"
-                         title="plus balance" width="30px">
+                    <img id="plusBalance"  data-bs-toggle="modal" data-bs-target="#balanceModal" src="{{ mix('/resources/assets/add-plus-button.png') }}" alt="plus balance"
+                        title="plus balance" width="30px">
                 </div>
             </div>
         </div>
         <div class="card main-card">
-            <img id="plusStations" data-bs-toggle="modal" data-bs-target="#frequentStationModal" src="{{ mix("/resources/assets/add-plus-button.png")  }}" alt="plus balance"
-                 title="plus balance" width="30px">
+            <img id="plusStations" data-bs-toggle="modal" data-bs-target="#frequentStationModal" src="{{ mix('/resources/assets/add-plus-button.png') }}" alt="plus balance"
+                title="plus balance" width="30px">
             <div class="card-body row justify-content-around">
                 <div class="lines col">
-                    @foreach($stations as $s)
+                    @foreach ($stations as $s)
                         <div class="">
-                            <span>Estação:  {{ $s->displayName }}</span>
+                            <span>Estação: {{ $s->displayName }}</span>
                         </div>
                     @endforeach
                 </div>
@@ -34,8 +37,8 @@
         <button style="position:fixed;
             right:0;
             bottom:0;">
-            <img id="plusBalance" src="{{ mix("/resources/assets/add-plus-button.png")  }}" alt="plus balance"
-                 title="plus balance" width="30px">
+            <img id="plusBalance" src="{{ mix('/resources/assets/add-plus-button.png') }}" alt="plus balance"
+                title="plus balance" width="30px">
         </button>
     </div>
 
