@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RegisteredTripsAnalyticsModel;
+use App\Models\StationSearchAnalyticsModel;
+use App\Models\WebsiteVisitorsAnalyticsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,8 +20,11 @@ class AdminPanelController extends Controller
             echo "ola";
             return redirect('/');
         }
-
-        return view('pages.admin-panel');
+        $stationsSearch = count(StationSearchAnalyticsModel::all());
+        $visitorsCount = count(WebsiteVisitorsAnalyticsModel::all());
+        $registeredTrips = count(RegisteredTripsAnalyticsModel::all());
+        return view('pages.admin-panel', ['stationsSearch' => $stationsSearch, 'visitorsCount' => $visitorsCount,
+            'registeredTrips' => $registeredTrips]);
     }
 
     /**
