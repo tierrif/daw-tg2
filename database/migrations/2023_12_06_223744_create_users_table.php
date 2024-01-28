@@ -13,9 +13,6 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-
-            // TODO: Check if this is working in terms of authentication.
-
             // Account details (generated).
             $table->string('name'); // Or as previously known, 'username'.
             $table->string('email')->unique();
@@ -23,10 +20,7 @@ return new class extends Migration
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->rememberToken();
-
-            // FrequentUser attributes.
-            $table->string('firstName', 80);
-            $table->string('lastName', 80);
+            $table->boolean('permissions'); //admin permissions
             $table->float('balance'); // Money balance (saldo).
         });
     }

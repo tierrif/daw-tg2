@@ -14,7 +14,7 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $primaryKey = 'id';
 
-    protected $fillable = ['name', 'email', 'password', 'lastName', 'firstName', 'balance'];
+    protected $fillable = ['name', 'email', 'password', 'balance', 'permissions'];
 
 
     public function stations(): BelongsToMany

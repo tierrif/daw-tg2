@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LineSeeder::class, false, ['token' => $token]);
         $this->call(DestinationSeeder::class, false, ['token' => $token]);
         $this->call(StationLineSeeder::class, false, ['token' => $token]);
+        $this->call(UserSeeder::class, false);
     }
 }
