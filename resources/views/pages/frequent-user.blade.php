@@ -37,4 +37,8 @@
                  title="plus balance" width="30px">
         </button>
     </div>
+
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="balanceModal">
+        ...
+    </div>
 @endsection
