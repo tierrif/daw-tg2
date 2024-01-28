@@ -7,8 +7,12 @@
         <div class="card-body row justify-content-around">
             <div class="lines col">
                 <ul>
-                    <li>Número de visitas gerais: </li>
-                    <li>Número de pesquisa de estações: </li>
+                    <li>Número de visitas gerais: {{ $visitorsCount  }}</li>
+                    <li>Url mais visitado: </li>
+                    <li>Número de pesquisa de estações (Todas): {{ $stationsSearch  }}</li>
+                    <li>Estação mais procurada:  </li>
+                    <li>Número de viagens registadas: {{ $registeredTrips  }}</li>
+
                 </ul>
             </div>
             <div class="station-search col">
