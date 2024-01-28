@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminPanelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,7 @@ use App\Http\Controllers\FrequentUserController;
 Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/dashboard', [FrequentUserController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/admin-panel', [AdminPanelController::class, 'index'])->middleware(['auth', 'verified'])->name('admin-panel');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

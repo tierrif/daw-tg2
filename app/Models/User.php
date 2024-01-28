@@ -16,6 +16,7 @@ class User extends Authenticatable
 
     protected $fillable = ['name', 'email', 'password', 'balance', 'permissions'];
 
+    protected $hidden = array('password', 'remember_token');
 
     public function stations(): BelongsToMany
     {
