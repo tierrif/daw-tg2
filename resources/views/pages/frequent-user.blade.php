@@ -1,6 +1,7 @@
 @extends('main')
 
 @section('content')
+    @vite(['resources/js/frequent-user.js', 'resources/scss/app.scss'])
     <div class="container">
         <div class="card">
             <div class="card-body row justify-content-around">

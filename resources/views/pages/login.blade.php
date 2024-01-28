@@ -1,6 +1,7 @@
 @extends('main')
 
 @section('content')
+@vite(['resources/js/login.js', 'resources/scss/app.scss'])
 <div>
     <form method="POST" action="{{ route('login') }}">
         @csrf
