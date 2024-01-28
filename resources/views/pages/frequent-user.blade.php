@@ -14,6 +14,8 @@
             </div>
         </div>
         <div class="card main-card">
+            <img id="plusStations" src="{{ mix("/resources/assets/add-plus-button.png")  }}" alt="plus balance"
+                 title="plus balance" width="30px">
             <div class="card-body row justify-content-around">
                 <div class="lines col">
                     @foreach($stations as $s)
