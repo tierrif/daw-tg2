@@ -83,10 +83,10 @@ $primary: #e43a2e;
 #search-btn {
     margin-top: 12px;
     float: right;
-}
 
-#search-btn:hover {
-    color: #fff;
+    :hover {
+        color: #fff;
+    }
 }
 
 .hidden {
@@ -100,6 +100,6 @@ $primary: #e43a2e;
     margin-right: auto;
 }
 
-#plusBalance{
+#plusBalance {
     float: inline-end;
 }

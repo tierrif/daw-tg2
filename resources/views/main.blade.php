@@ -13,7 +13,7 @@
 <body>
     <nav class="navbar bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="#">
+            <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
                 <img src="{{ mix('resources/assets/logo.png') }}" alt="Bootstrap"
                     width="30" height="30" />
                 <h4 class="my-0 logo-text">PVML</h4>
