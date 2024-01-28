@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Line;
+use App\Models\Station;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,8 @@ class FrequentUserController extends Controller
         $lines = Line::all();
         $balance = $user['balance'];
         $stations = User::with('stations')->get()->firstWhere('email', $user['email'])['stations'];
-        return view('pages.frequent-user', ['username' => $name, 'lines' => $lines, 'balance' => $balance, 'stations' => $stations]);
+        return view('pages.frequent-user', ['username' => $name, 'userId' => $user['id'], 'lines' => $lines,
+            'balance' => $balance, 'frequentStations' => $stations, 'allStations' => Station::all()]);
     }
 
     /**
