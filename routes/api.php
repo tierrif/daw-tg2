@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BalanceController;
+use App\Http\Controllers\FrequentStationsController;
 use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\LineController;
 use App\Http\Controllers\StationController;
@@ -29,4 +30,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('line', LineController::class);
 Route::resource('station', StationController::class);
 Route::resource('balance', BalanceController::class);
+Route::resource('frequentstations', FrequentStationsController::class);
 Route::resource('destination', DestinationController::class);

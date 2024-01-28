@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
-    @vite(['resources/js/app.js', 'resources/scss/app.scss'])
 </head>
 
 <body>
@@ -25,11 +24,7 @@
 
                             <a class="nav-link" href="/logout" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                @if(!$username)
-                                    Sair
-                                @else
-                                    {{$username}}
-                                @endif
+                                {{ \Illuminate\Support\Facades\Auth::getUser()['name']  }}
 
 
                             </a>

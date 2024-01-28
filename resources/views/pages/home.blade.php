@@ -1,6 +1,7 @@
 @extends('main')
 
 @section('content')
+    @vite(['resources/js/app.js', 'resources/scss/app.scss'])
     <div class="container">
         <h1 class="site-title h2">Planeador de Viagens para o Metropolitano de Lisboa</h1>
         <div class="card main-card">
