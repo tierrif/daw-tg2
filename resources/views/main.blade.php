@@ -14,28 +14,34 @@
     <nav class="navbar bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-                <img src="{{ mix('resources/assets/logo.png') }}" alt="Bootstrap"
-                    width="30" height="30" />
+                <img src="{{ mix('resources/assets/logo.png') }}" alt="Bootstrap" width="30" height="30" />
                 <h4 class="my-0 logo-text">PVML</h4>
             </a>
             <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item">
-                    @if (Auth::check())
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <a class="nav-link" href="/logout" onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ \Illuminate\Support\Facades\Auth::getUser()['name']  }}
-
-
-                            </a>
-                        </form>
-
-                    @else
+                @if (Auth::check())
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            {{ \Illuminate\Support\Facades\Auth::getUser()['name'] }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="/dashboard">Área Reservada</a>
+                            </li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <a class="dropdown-item" href="/logout" onclick="event.preventDefault();
+                                                this.closest('form').submit();">Sair</a>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                @else
+                    <li class="nav-item">
                         <a class="nav-link" href="/login">Entrar</a>
-                    @endif
-                </li>
+                    </li>
+                @endif
             </ul>
         </div>
     </nav>

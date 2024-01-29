@@ -180,3 +180,19 @@ $primary: #e43a2e;
     margin: 0;
     color: #fff;
 }
+
+.dropdown-menu {
+    background: #fff;
+    position: absolute !important;
+    border: 1px solid #eee;
+    right: 0 !important;
+    left: auto !important;
+
+    :hover {
+        background: #eee;
+    }
+}
+
+.dropdown-item {
+    color: #000 !important;
+}
