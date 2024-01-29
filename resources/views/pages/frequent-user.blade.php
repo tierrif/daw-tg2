@@ -35,6 +35,7 @@
                     <span>aaa</span>
                 </div>
             </div>
+            <button id="registTrip">Registar viagem</button>
         </div>
     </div>
 
