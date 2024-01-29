@@ -24,7 +24,7 @@
             </div>
             <div class="card-body justify-content-around">
 
-                <div class="button-wrapper">
+                <div class="button-wrapper station-button-wrapper">
                     <button class="btn btn-primary icon-button" data-bs-toggle="modal"
                         data-bs-target="#frequentStationModal">
                         <img id="plusStations" src="{{ mix('/resources/assets/add-button.png') }}" alt="Add Station"
@@ -47,6 +47,14 @@
                             </div>
                         </div>
                     @endforeach
+                </div>
+
+                <div class="button-wrapper mt-4">
+                    <button id="register-trip" class="btn btn-primary icon-button">
+                        <img id="plusStations" src="{{ mix('/resources/assets/add-button.png') }}" alt="Add Trip"
+                            title="Adicionar Viagem" width="15px" />
+                        Nova Viagem
+                    </button>
                 </div>
             </div>
         </div>

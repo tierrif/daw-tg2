@@ -2,6 +2,7 @@ import * as bootstrap from 'bootstrap'
 
 window.bootstrap = bootstrap
 
+const METRO_TRIP_COST = 1.61
 
 window.onload = async () => {
     //Add visit analytics
@@ -130,7 +131,7 @@ window.onload = async () => {
             })
 
             if (updateBalance.ok) {
-                let finalBalance = parseFloat(document.querySelector('#balanceInitialValue').value)
+                const finalBalance = parseFloat(document.querySelector('#balanceInitialValue').value)
                     + parseFloat(balanceValue)
 
                 document.querySelector('#balanceInitialValue').value = finalBalance
@@ -173,14 +174,12 @@ window.onload = async () => {
             headers: { 'Content-type': 'application/json; charset=UTF-8' }
         })
 
-        if (response.ok) {
-            document.querySelector('#closeModalStation').click()
-            document.querySelector('#toastText').innerText = 'A estação foi adicionado com sucesso.'
-            toast.show()
-        } else {
+        if (!response.ok) {
             document.querySelector('#closeModalStation').click()
             document.querySelector('#toastText').innerText = 'Ocorreu um erro.'
             toast.show()
         }
+
+        window.location.reload()
     })
 }
