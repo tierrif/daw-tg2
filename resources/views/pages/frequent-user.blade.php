@@ -6,33 +6,47 @@
 
 @section('content')
     <div class="container">
-        <div class="card">
+        <div class="card mt-5">
             <div class="card-header">
-                <div class="row">
+                <div class="row balance">
                     <div class="lines col">
                         <h4 id="balanceText">Saldo: {{ $balance }} €</h4>
                     </div>
                     <div class="add-balance col">
-                        <img id="plusBalance" data-bs-toggle="modal" data-bs-target="#balanceModal"
-                            src="{{ mix('/resources/assets/add-plus-button.png') }}" alt="plus balance" title="plus balance"
-                            width="30px">
-                            	<i class="fas fa-camera"></i>
+                        <button class="btn btn-primary icon-button" id="plusBalance" data-bs-toggle="modal"
+                            data-bs-target="#balanceModal">
+                            <img src="{{ mix('/resources/assets/add-button.png') }}" alt="Add Balance"
+                                title="Adicionar Saldo" width="15px" />
+                            Adicionar Saldo
+                        </button>
                     </div>
                 </div>
             </div>
-            <img id="plusStations" data-bs-toggle="modal" data-bs-target="#frequentStationModal"
-                src="{{ mix('/resources/assets/add-plus-button.png') }}" alt="plus balance" title="plus balance"
-                width="30px">
-            <div class="card-body row justify-content-around">
-                <div class="lines col">
+            <div class="card-body justify-content-around">
+
+                <div class="button-wrapper">
+                    <button class="btn btn-primary icon-button" data-bs-toggle="modal"
+                        data-bs-target="#frequentStationModal">
+                        <img id="plusStations" src="{{ mix('/resources/assets/add-button.png') }}" alt="Add Station"
+                            title="Adicionar Estação" width="15px" />
+                        Nova Estação Frequente
+                    </button>
+                </div>
+
+                <div id="frequent-stations" class="station-list">
                     @foreach ($frequentStations as $s)
-                        <div class="">
-                            <span>Estação: {{ $s->displayName }}</span>
+                        <div class="card mt-4"
+                            data-station="{{ $s->stringId }}"
+                            data-lines="{{ json_encode(array_map((fn($l) => $l['stringId']), $s->lines->toArray())) }}">
+                            <div class="row">
+                                <div class="col">
+                                    <h5>Estação: {{ $s->displayName }}</h5>
+                                </div>
+                                <div class="col station-info">
+                                </div>
+                            </div>
                         </div>
                     @endforeach
-                </div>
-                <div class="station-search col">
-                    <span>aaa</span>
                 </div>
             </div>
         </div>
@@ -96,9 +110,28 @@
         </div>
     </div>
 
+    <div class="modal fade" id="stationInfoModal" tabindex="-1" aria-labelledby="stationInfoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="stationInfoModalLabel">Informações para <span id="station-name"></span></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="stationInfoModalBody" class="modal-body">
+                    <p class="text"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        id="closeModalStation">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="liveToast" class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive"
-            aria-atomic="true">
+        <div id="liveToast" class="toast align-items-center text-bg-primary border-0" role="alert"
+            aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
                 <div class="toast-body" style="color: #fff;">
                     <span id="toastText">Hello, world! This is a toast message.</span>
@@ -109,5 +142,6 @@
         </div>
     </div>
 
-    <input type="hidden" value="{{ $balance }}" id="balanceInitialValue">
+    <input id="balanceInitialValue" type="hidden" value="{{ $balance }}" />
+    <input id="frequent-stations-data" type="hidden" value="{{ json_encode($frequentStations) }}" />
 @endsection

@@ -3,64 +3,164 @@ import * as bootstrap from 'bootstrap'
 window.bootstrap = bootstrap
 
 
-window.onload = () => {
+window.onload = async () => {
     const toast = bootstrap.Toast.getOrCreateInstance(document.getElementById('liveToast'))
+
+    // Get frequent stations.
+    const stations = JSON.parse(document.querySelector('#frequent-stations-data').value)
+
+    // Add line states to all lines.
+    const lines = Object.fromEntries(Object.entries(
+        (await (await fetch('http://localhost:8000/api/line')).json()).resposta).splice(0, 4))
+
+    for (const stationEl of document.querySelectorAll('#frequent-stations .card')) {
+        const stationLines = JSON.parse(stationEl.getAttribute('data-lines'))
+
+        let isOk = true
+        for (const stationLine of stationLines) {
+            if (lines[stationLine] !== ' Ok') {
+                isOk = false
+                break
+            }
+        }
+
+        const h5 = document.createElement('h5')
+        h5.classList.add(isOk ? 'station-ok' : 'station-not-ok')
+        h5.innerText = isOk ? 'Operacional' : 'Com Interrupções'
+
+        stationEl.querySelector('.station-info').append(h5)
+        stationEl.addEventListener('click', async (e) => {
+            const station = stations.find((s) => s.stringId === e.currentTarget.getAttribute('data-station'))
+            document.querySelector('#station-name').innerText = station.displayName
+
+            // Show the result.
+            const stationInfo = document.querySelector('#stationInfoModalBody')
+
+            const text = stationInfo.querySelector('.text')
+            text.innerHTML = 'Por favor, aguarde...'
+
+            const modal = new bootstrap.Modal(document.querySelector('#stationInfoModal'))
+            modal.show()
+
+            const stops = []
+            for (const line of station.lines) {
+                const stationResults = await Promise.all((await (await fetch(`http://localhost:8000/api/station/${line.stringId}`)).json())
+                    .resposta.map((result) => ({ ...result, line }))
+                    .map(async (result) => ({
+                        ...result, destinationInfo: (await ((await fetch(`http://localhost:8000/api/destination/${result.destino}`)).json()))
+                    })))
+
+                stops.push(...stationResults.filter((result) => result.stop_id === station.stringId))
+            }
+
+            text.innerHTML = ''
+
+            let previousLine
+            let previousLineCol
+            for (const stop of stops) {
+                // Display the line if it's different.
+                if (previousLine !== stop.line.id) {
+                    previousLine = stop.line.id
+                    previousLineCol = document.createElement('div')
+                    previousLineCol.classList.add('col')
+
+                    const lineIndicatorWrapper = document.createElement('h5')
+                    lineIndicatorWrapper.classList.add('line', stop.line.stringId)
+
+                    const lineIndicator = document.createElement('span')
+                    lineIndicator.classList.add('line-box', 'line-box-sm')
+                    lineIndicator.innerText = stop.line.displayName
+
+                    lineIndicatorWrapper.append(document.createTextNode('Linha: '))
+                    lineIndicatorWrapper.append(lineIndicator)
+
+                    previousLineCol.append(lineIndicatorWrapper)
+
+                    text.append(previousLineCol)
+
+                    const p = document.createElement('p')
+                    if (lines[stop.line.stringId] !== ' Ok') {
+                        p.innerHTML = '<b>Interrupções na linha: </b>' + lines[stop.line.stringId]
+                    } else {
+                        p.innerHTML = '<b>Linha operacional.</b>'
+                    }
+                    text.append(p)
+                }
+
+                // Display stop info.
+                const info = document.createElement('p')
+                info.innerHTML += `Sentido <b>${stop.destinationInfo.displayName}</b><br>`
+                const minutes = stop.tempoChegada1 / 60
+                info.innerHTML += `Tempo de chegada: <b>${Math.floor(minutes)}</b> min e <b>${Math.floor((minutes % 1) * 60)}</b> seg<br>`
+                info.innerHTML += `Comboio: <b>${stop.comboio}</b>`
+
+                previousLineCol.append(info)
+            }
+        })
+    }
 
     document.getElementById('submitBalanceForm')
         .addEventListener('click', async (e) => {
             e.preventDefault()
+
             const balanceValue = document.querySelector('#balanceValue').value
-            if (parseFloat(balanceValue) <= 0 || balanceValue === ''){
+            if (parseFloat(balanceValue) <= 0 || balanceValue === '') {
                 document.querySelector('#closeModal').click()
-                document.querySelector('#toastText').innerText = 'Inseriu um montante invalido!'
+                document.querySelector('#toastText').innerText = 'Inseriu um montante inválido.'
+
                 toast.show()
-                document.querySelector('#balanceValue').value = 0
-                return
+
+                return document.querySelector('#balanceValue').value = 0
             }
-            const updateBalance =
-                await fetch(`http://127.0.0.1:8000/api/balance/${document.getElementById('userId').value}`,
-                    {
-                        method: 'PUT', body: JSON.stringify({'balance': parseFloat(balanceValue)}),
-                        headers: {"Content-type": "application/json; charset=UTF-8"}
-                    })
+
+            const updateBalance = await fetch(`http://127.0.0.1:8000/api/balance/${document.getElementById('userId').value}`, {
+                method: 'PUT', body: JSON.stringify({ balance: parseFloat(balanceValue) }),
+                headers: { 'Content-type': 'application/json; charset=UTF-8' }
+            })
+
             if (updateBalance.ok) {
                 let finalBalance = parseFloat(document.querySelector('#balanceInitialValue').value)
                     + parseFloat(balanceValue)
+
                 document.querySelector('#balanceInitialValue').value = finalBalance
-                document.querySelector('#balanceText').innerHTML = "Saldo: " + finalBalance + " €"
+                document.querySelector('#balanceText').innerHTML = 'Saldo: ' + finalBalance + ' €'
                 document.querySelector('#closeModal').click()
                 document.querySelector('#toastText').innerText = 'O saldo foi atualizado com sucesso.'
+
                 toast.show()
+
                 document.querySelector('#balanceValue').value = 0
             } else {
                 document.querySelector('#closeModal').click()
-                document.querySelector('#toastText').innerText = 'Ocorreu um erro!'
+                document.querySelector('#toastText').innerText = 'Ocorreu um erro.'
+
                 toast.show()
+
                 document.querySelector('#balanceValue').value = 0
             }
         })
 
     document.querySelector('#stationAddBtn').addEventListener('click', async (e) => {
         e.preventDefault()
-        let station = document.querySelector('#stationDataList').value
-        let userId = document.getElementById('userId').value
-        let allStations = await (await fetch('http://127.0.0.1:8000/api/station')).json()
+
+        const station = document.querySelector('#stationDataList').value
+        const userId = document.getElementById('userId').value
+        const allStations = await (await fetch('http://127.0.0.1:8000/api/station')).json()
+
         let stationId
         try {
-            stationId = allStations.filter((s) => {
-                return s.displayName === station
-            })[0].id
-        }catch (e) {
+            stationId = allStations.find((s) => s.displayName === station).id
+        } catch (e) {
             document.querySelector('#closeModalStation').click()
-            document.querySelector('#toastText').innerText = 'Inseriu uma estação não existente!'
-            toast.show()
-            return
+            document.querySelector('#toastText').innerText = 'Inseriu uma estação não existente.'
+
+            return toast.show()
         }
-        const response = await fetch(`http://127.0.0.1:8000/api/frequentstations/`,
-            {
-                method: 'POST', body: JSON.stringify({'userId': userId, 'stationId': stationId}),
-                headers: {"Content-type": "application/json; charset=UTF-8"}
-            })
+
+        const response = await fetch(`http://127.0.0.1:8000/api/frequentstations/`, {
+            method: 'POST', body: JSON.stringify({ userId, stationId }),
+            headers: { 'Content-type': 'application/json; charset=UTF-8' }
+        })
 
         if (response.ok) {
             document.querySelector('#closeModalStation').click()
@@ -68,10 +168,8 @@ window.onload = () => {
             toast.show()
         } else {
             document.querySelector('#closeModalStation').click()
-            document.querySelector('#toastText').innerText = 'Ocorreu um erro!'
+            document.querySelector('#toastText').innerText = 'Ocorreu um erro.'
             toast.show()
         }
     })
-
-
 }
