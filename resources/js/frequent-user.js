@@ -153,7 +153,7 @@ window.onload = async () => {
         //Registry trip analytics
         if (res) {
             const userId = document.getElementById('userId').value
-            await fetch('http://localhost:8000/api/registedtrips', {
+            await fetch('http://localhost:8000/api/registeredtrips', {
                 method: 'POST',
                 body: JSON.stringify({ 'userId': userId, 'userAgent': window.navigator.userAgent }),
                 headers: { 'Content-type': 'application/json; charset=UTF-8' }

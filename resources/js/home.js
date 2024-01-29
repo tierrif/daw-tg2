@@ -40,7 +40,7 @@ window.onload = async () => {
 
         //Add to analytics
         let stationId = station.id
-        let response = await fetch('http://localhost:8000/api/stationssearch', {
+        let response = await fetch('http://localhost:8000/api/stationsearch', {
             method: 'POST',
             body: JSON.stringify({ 'station_id': stationId, 'userAgent': window.navigator.userAgent }),
             headers: { 'Content-type': 'application/json; charset=UTF-8' }

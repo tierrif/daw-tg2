@@ -35,6 +35,6 @@ Route::resource('station', StationController::class);
 Route::resource('balance', BalanceController::class);
 Route::resource('frequentstations', FrequentStationsController::class);
 Route::resource('destination', DestinationController::class);
-Route::resource('registedtrips', RegisteredTripsAnalyticsController::class);
-Route::resource('stationssearch', StationSearchAnalyticsController::class);
+Route::resource('registeredtrips', RegisteredTripsAnalyticsController::class);
+Route::resource('stationsearch', StationSearchAnalyticsController::class);
 Route::resource('websitevisitors', WebsiteVisitorsAnalyticsController::class);

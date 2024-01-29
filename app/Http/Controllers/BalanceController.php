@@ -16,9 +16,9 @@ class BalanceController extends Controller
     {
         $userId = $id;
         $requestedAddBalance = $request->input('balance');
-        $user = User::all()->where('id', $userId)[0];
+        $user = User::all()->firstWhere('id', $userId);
         $user->balance += floatval($requestedAddBalance);
         $user->save();
-        return response("Updated with sucess");
+        return response("Updated with success");
     }
 }
