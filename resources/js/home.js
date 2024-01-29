@@ -37,6 +37,12 @@ window.onload = async () => {
         const station = JSON.parse(document.querySelector('#stations').value)
             .find((station) => station.displayName === selectedStation.value)
 
+        // Validate the input.
+        if (!station) {
+            selectedStation.classList.add('is-invalid')
+            button.removeAttribute('disabled')
+            return document.querySelector('#datalistError').classList.remove('hidden')
+        }
 
         //Add to analytics
         let stationId = station.id
@@ -45,15 +51,6 @@ window.onload = async () => {
             body: JSON.stringify({ 'station_id': stationId, 'userAgent': window.navigator.userAgent }),
             headers: { 'Content-type': 'application/json; charset=UTF-8' }
         })
-
-
-
-        // Validate the input.
-        if (!station) {
-            selectedStation.classList.add('is-invalid')
-            button.removeAttribute('disabled')
-            return document.querySelector('#datalistError').classList.remove('hidden')
-        }
 
         const stops = []
         for (const line of station.lines) {
