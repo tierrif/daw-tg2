@@ -35,8 +35,7 @@
 
                 <div id="frequent-stations" class="station-list">
                     @foreach ($frequentStations as $s)
-                        <div class="card mt-4"
-                            data-station="{{ $s->stringId }}"
+                        <div class="card mt-4" data-station="{{ $s->stringId }}"
                             data-lines="{{ json_encode(array_map((fn($l) => $l['stringId']), $s->lines->toArray())) }}">
                             <div class="row">
                                 <div class="col">
@@ -69,13 +68,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addBalanceForm">
-                        <div class="mb-3">
-                            <label for="balanceValue" class="col-form-label">Saldo:</label>
-                            <input type="number" class="form-control" id="balanceValue" minlength="0.5">
-                            <input type="hidden" id="userId" value="{{ $userId }}">
-                        </div>
-                    </form>
+                    <div class="mb-3">
+                        <label for="balanceValue" class="col-form-label">Saldo:</label>
+                        <input type="number" class="form-control" id="balanceValue" minlength="0.5">
+                        <input type="hidden" id="userId" value="{{ $userId }}">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -95,18 +92,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addStationForm">
-                        <div class="mb-3">
-                            <label for="stations" class="col-form-label">Estacão:</label>
-                            <input class="form-control" list="stations" id="stationDataList"
-                                placeholder="Pesquisar estação...">
-                            <datalist id="stations">
-                                @foreach ($allStations as $s)
-                                    <option value="{{ $s['displayName'] }}"></option>
-                                @endforeach
-                            </datalist>
-                        </div>
-                    </form>
+                    <div class="mb-3">
+                        <label for="stations" class="col-form-label">Estacão:</label>
+                        <input class="form-control" list="stations" id="stationDataList" placeholder="Pesquisar estação...">
+                        <datalist id="stations">
+                            @foreach ($allStations as $s)
+                                <option value="{{ $s['displayName'] }}"></option>
+                            @endforeach
+                        </datalist>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
@@ -123,7 +117,8 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="stationInfoModalLabel">Informações para <span id="station-name"></span></h1>
+                    <h1 class="modal-title fs-5" id="stationInfoModalLabel">Informações para <span
+                            id="station-name"></span></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div id="stationInfoModalBody" class="modal-body">
