@@ -57,6 +57,7 @@
                     </button>
                 </div>
             </div>
+            <button id="registTrip">Registar viagem</button>
         </div>
     </div>
 
