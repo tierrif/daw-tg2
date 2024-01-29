@@ -10,14 +10,14 @@ use App\Models\User;
 use App\Models\WebsiteVisitorsAnalyticsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 
 class FrequentUserController extends Controller
 {
     public function index()
     {
         $user = Auth::getUser();
-        if($user->permissions == 1){
+        if ($user->permissions == 1) {
             return $this->adminPanel();
         }
 
@@ -44,26 +44,33 @@ class FrequentUserController extends Controller
         ]);
     }
 
-    function adminPanel(){
+    function adminPanel()
+    {
         $stationsSearch = count(StationSearchAnalyticsModel::all());
         $visitorsCount = count(WebsiteVisitorsAnalyticsModel::all());
         $registeredTrips = count(RegisteredTripsAnalyticsModel::all());
-        $urlMostViewed = WebsiteVisitorsAnalyticsModel::select('url_visited', \DB::raw('COUNT(url_visited) as value_occurrence'))
+
+        $urlMostViewed = WebsiteVisitorsAnalyticsModel::select('url_visited', DB::raw('COUNT(url_visited) as value_occurrence'))
             ->groupBy('url_visited')
-            ->orderByDesc(\DB::raw('COUNT(url_visited)'))
+            ->orderByDesc(DB::raw('COUNT(url_visited)'))
             ->limit(1)
             ->first();
-        $stationMostSearched = StationSearchAnalyticsModel::select('station_id', \DB::raw('COUNT(station_id) as value_occurrence'))
+
+        $stationMostSearched = StationSearchAnalyticsModel::select('station_id', DB::raw('COUNT(station_id) as value_occurrence'))
             ->groupBy('station_id')
-            ->orderByDesc(\DB::raw('COUNT(station_id)'))
+            ->orderByDesc(DB::raw('COUNT(station_id)'))
             ->limit(1)
             ->first();
-        $stationMostSearchedName = Station::all()->firstWhere('id', $stationMostSearched->station_id);
-        return view('pages.admin-panel', ['stationsSearch' => $stationsSearch, 'visitorsCount' => $visitorsCount,
+
+        $stationMostSearchedName = Station::all()->firstWhere('id', $stationMostSearched?->station_id ?? -1);
+
+        return view('pages.admin-panel', [
+            'stationsSearch' => $stationsSearch, 'visitorsCount' => $visitorsCount,
             'registeredTrips' => $registeredTrips, 'mostVisitedUrl' => $urlMostViewed->url_visited,
             'mostVisitedUrlOcurrence' => $urlMostViewed->value_occurrence,
-            'stationMostSearchedName' => $stationMostSearchedName->displayName,
-            'stationMostSearchedOcurrence' => $stationMostSearched->value_occurrence]);
+            'stationMostSearchedName' => $stationMostSearchedName?->displayName ?? 'N/A',
+            'stationMostSearchedOcurrence' => $stationMostSearched?->value_occurrence ?? 0
+        ]);
     }
 
     /**
