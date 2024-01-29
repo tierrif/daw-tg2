@@ -50,14 +50,13 @@
                 </div>
 
                 <div class="button-wrapper mt-4">
-                    <button id="register-trip" class="btn btn-primary icon-button">
+                    <button id="registTrip" class="btn btn-primary icon-button">
                         <img id="plusStations" src="{{ mix('/resources/assets/add-button.png') }}" alt="Add Trip"
                             title="Adicionar Viagem" width="15px" />
                         Nova Viagem
                     </button>
                 </div>
             </div>
-            <button id="registTrip">Registar viagem</button>
         </div>
     </div>
 

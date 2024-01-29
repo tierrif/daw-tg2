@@ -8,14 +8,16 @@ window.onload = async () => {
     //Add visit analytics
     let url = window.location.pathname.split('/')
     url = url[url.length - 1]
-    if (url === ''){
+    if (url === '') {
         url = 'homepage'
     }
-    let response = await fetch('http://localhost:8000/api/websitevisitors', {
+
+    await fetch('http://localhost:8000/api/websitevisitors', {
         method: 'POST',
-        body: JSON.stringify({'url_visited' : url, 'userAgent' : window.navigator.userAgent}),
-        headers: {"Content-type": "application/json; charset=UTF-8"}
+        body: JSON.stringify({ 'url_visited': url, 'userAgent': window.navigator.userAgent }),
+        headers: { 'Content-type': 'application/json; charset=UTF-8' }
     })
+
     const toast = bootstrap.Toast.getOrCreateInstance(document.getElementById('liveToast'))
 
     // Get frequent stations.
@@ -111,47 +113,7 @@ window.onload = async () => {
         })
     }
 
-    document.getElementById('submitBalanceForm')
-        .addEventListener('click', async (e) => {
-            e.preventDefault()
-
-            const balanceValue = document.querySelector('#balanceValue').value
-            if (parseFloat(balanceValue) <= 0 || balanceValue === '') {
-                document.querySelector('#closeModal').click()
-                document.querySelector('#toastText').innerText = 'Inseriu um montante inválido.'
-
-                toast.show()
-
-                return document.querySelector('#balanceValue').value = 0
-            }
-
-            const updateBalance = await fetch(`http://127.0.0.1:8000/api/balance/${document.getElementById('userId').value}`, {
-                method: 'PUT', body: JSON.stringify({ balance: parseFloat(balanceValue) }),
-                headers: { 'Content-type': 'application/json; charset=UTF-8' }
-            })
-
-            if (updateBalance.ok) {
-                const finalBalance = parseFloat(document.querySelector('#balanceInitialValue').value)
-                    + parseFloat(balanceValue)
-
-                document.querySelector('#balanceInitialValue').value = finalBalance
-                document.querySelector('#balanceText').innerHTML = 'Saldo: ' + finalBalance + ' €'
-                document.querySelector('#closeModal').click()
-                document.querySelector('#toastText').innerText = 'O saldo foi atualizado com sucesso.'
-
-                toast.show()
-
-                document.querySelector('#balanceValue').value = 0
-            } else {
-                document.querySelector('#closeModal').click()
-                document.querySelector('#toastText').innerText = 'Ocorreu um erro.'
-
-                toast.show()
-
-                document.querySelector('#balanceValue').value = 0
-            }
-        })
-        .addEventListener('click', async (e) => await addBalance(e))
+    document.getElementById('submitBalanceForm').addEventListener('click', async (e) => await addBalance(e))
 
     document.querySelector('#stationAddBtn').addEventListener('click', async (e) => {
         e.preventDefault()
@@ -178,7 +140,8 @@ window.onload = async () => {
         if (!response.ok) {
             document.querySelector('#closeModalStation').click()
             document.querySelector('#toastText').innerText = 'Ocorreu um erro.'
-            toast.show()
+
+            return toast.show()
         }
 
         window.location.reload()
@@ -188,49 +151,64 @@ window.onload = async () => {
     document.querySelector('#registTrip').addEventListener('click', async (e) => {
         let res = await addBalance(e, DEFAULT_TRIP_VALUE)
         //Registry trip analytics
-        if (res){
-            let userId = document.getElementById('userId').value
-            let response = await fetch('http://localhost:8000/api/registedtrips', {
+        if (res) {
+            const userId = document.getElementById('userId').value
+            await fetch('http://localhost:8000/api/registedtrips', {
                 method: 'POST',
-                body: JSON.stringify({'userId' : userId, 'userAgent' : window.navigator.userAgent}),
-                headers: {"Content-type": "application/json; charset=UTF-8"}
+                body: JSON.stringify({ 'userId': userId, 'userAgent': window.navigator.userAgent }),
+                headers: { 'Content-type': 'application/json; charset=UTF-8' }
             })
         }
     })
 
-    async function addBalance(e, tripBalance = null){
+    async function addBalance(e, tripBalance = null) {
         e.preventDefault()
         const balanceValue = !tripBalance ? document.querySelector('#balanceValue').value : tripBalance
-        if (parseFloat(balanceValue) <= 0 || balanceValue === ''){
+        if (parseFloat(balanceValue) <= 0 || balanceValue === '') {
             document.querySelector('#closeModal').click()
-            document.querySelector('#toastText').innerText = 'Inseriu um montante invalido!'
+            document.querySelector('#toastText').innerText = 'Inseriu um montante inválido.'
+
             toast.show()
+
             document.querySelector('#balanceValue').value = 0
             return
         }
+
+        const finalBalance = parseFloat(document.querySelector('#balanceInitialValue').value)
+            + parseFloat(tripBalance ? -balanceValue : balanceValue)
+
+        if (tripBalance && finalBalance < 0) {
+            document.querySelector('#toastText').innerText =
+                'Não tem saldo suficiente. Carregue o seu cartão e adicione saldo no canto superior direito.'
+
+            return toast.show()
+        }
+
         const updateBalance =
-            await fetch(`http://127.0.0.1:8000/api/balance/${document.getElementById('userId').value}`,
-                {
-                    method: 'PUT', body: JSON.stringify({'balance': parseFloat(balanceValue)}),
-                    headers: {"Content-type": "application/json; charset=UTF-8"}
-                })
+            await fetch(`http://127.0.0.1:8000/api/balance/${document.getElementById('userId').value}`, {
+                method: 'PUT', body: JSON.stringify({ 'balance': parseFloat(tripBalance ? -balanceValue : balanceValue) }),
+                headers: { 'Content-type': 'application/json; charset=UTF-8' }
+            })
+
         if (updateBalance.ok) {
-            let finalBalance = parseFloat(document.querySelector('#balanceInitialValue').value)
-                + parseFloat(balanceValue)
-            document.querySelector('#balanceInitialValue').value = finalBalance
-            document.querySelector('#balanceText').innerHTML = "Saldo: " + finalBalance + " €"
+            document.querySelector('#balanceInitialValue').value = finalBalance.toFixed(2)
+            document.querySelector('#balanceText').innerHTML = 'Saldo: ' + finalBalance.toFixed(2) + ' €'
             document.querySelector('#closeModal').click()
             document.querySelector('#toastText').innerText = !tripBalance ?
-                'O saldo foi atualizado com sucesso.' : 'A viagem foi registada com sucesso'
+                'O saldo foi atualizado com sucesso.' : 'A viagem foi registada com sucesso.'
+
             toast.show()
+
             document.querySelector('#balanceValue').value = 0
-            return 1;//Done with success
+            return 1; // Success
         } else {
             document.querySelector('#closeModal').click()
-            document.querySelector('#toastText').innerText = 'Ocorreu um erro!'
+            document.querySelector('#toastText').innerText = 'Ocorreu um erro.'
+
             toast.show()
+
             document.querySelector('#balanceValue').value = 0
-            return 0;//Not done
+            return 0; // Failure
         }
     }
 }
