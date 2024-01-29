@@ -2,13 +2,13 @@ window.onload = async () => {
     //Add visit analytics
     let url = window.location.pathname.split('/')
     url = url[url.length - 1]
-    if (url === ''){
+    if (url === '') {
         url = 'homepage'
     }
     let response = await fetch('http://localhost:8000/api/websitevisitors', {
         method: 'POST',
-        body: JSON.stringify({'url_visited' : url, 'userAgent' : window.navigator.userAgent}),
-        headers: {"Content-type": "application/json; charset=UTF-8"}
+        body: JSON.stringify({ 'url_visited': url, 'userAgent': window.navigator.userAgent }),
+        headers: { 'Content-type': 'application/json; charset=UTF-8' }
     })
 
     // Add line states to all lines.
@@ -42,8 +42,8 @@ window.onload = async () => {
         let stationId = station.id
         let response = await fetch('http://localhost:8000/api/stationssearch', {
             method: 'POST',
-            body: JSON.stringify({'station_id' : stationId, 'userAgent' : window.navigator.userAgent}),
-            headers: {"Content-type": "application/json; charset=UTF-8"}
+            body: JSON.stringify({ 'station_id': stationId, 'userAgent': window.navigator.userAgent }),
+            headers: { 'Content-type': 'application/json; charset=UTF-8' }
         })
 
 
@@ -66,8 +66,6 @@ window.onload = async () => {
 
             stops.push(...stationResults.filter((result) => result.stop_id === station.stringId))
         }
-
-        console.log(stops)
 
         // Show the result.
         const stationInfo = document.querySelector('#station-info')

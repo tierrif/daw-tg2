@@ -100,6 +100,69 @@ $primary: #e43a2e;
     margin-right: auto;
 }
 
-#plusBalance {
-    float: inline-end;
+.balance {
+    display: flex;
+
+    h4 {
+        margin: 0;
+    }
+
+    .col:not(.add-balance) {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.icon-button {
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+
+    img {
+        margin-right: 8px;
+    }
+}
+
+.btn:hover {
+    color: #fff !important;
+}
+
+.station-list {
+    user-select: none;
+
+    .card {
+        padding: 23px;
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        transition: .2s;
+    }
+
+    .card:hover {
+        opacity: 70%;
+        background: #eee;
+    }
+
+    h5 {
+        margin: 0;
+    }
+
+    .station-ok, .station-not-ok {
+        float: right;
+    }
+
+    .station-ok {
+        color: #00B13C;
+    }
+
+    .station-not-ok {
+        color: #FF4040;
+    }
 }
