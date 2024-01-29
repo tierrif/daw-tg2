@@ -9,17 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class StationSearchAnalyticsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return count(StationSearchAnalyticsModel::all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $stationId = $request->input('station_id');
@@ -28,9 +22,6 @@ class StationSearchAnalyticsController extends Controller
         return response("Insert with success");
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         return WebsiteVisitorsAnalyticsModel::all()->firstWhere('id', $id);

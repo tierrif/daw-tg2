@@ -9,17 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class WebsiteVisitorsAnalyticsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return count(RegisteredTripsAnalyticsModel::all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $urlVisited = $request->input('url_visited');
@@ -28,9 +22,6 @@ class WebsiteVisitorsAnalyticsController extends Controller
         return response("Insert with success");
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         return WebsiteVisitorsAnalyticsModel::all()->firstWhere('id', $id);
