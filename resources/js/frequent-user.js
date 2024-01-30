@@ -50,6 +50,8 @@ window.onload = async () => {
             // Show the result.
             const stationInfo = document.querySelector('#stationInfoModalBody')
 
+            document.querySelector('#deleteStation').setAttribute('data-station', station.id)
+
             const text = stationInfo.querySelector('.text')
             text.innerHTML = 'Por favor, aguarde...'
 
@@ -136,8 +138,10 @@ window.onload = async () => {
 
         const response = await fetch(`http://127.0.0.1:8000/api/frequentstations/`, {
             method: 'POST', body: JSON.stringify({ userId, stationId }),
-            headers: { 'Content-type': 'application/json; charset=UTF-8',
-                'Authorization': 'Bearer ' + document.querySelector('#token').value }
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                'Authorization': 'Bearer ' + document.querySelector('#token').value
+            }
         })
 
         if (!response.ok) {
@@ -152,7 +156,7 @@ window.onload = async () => {
 
     document.querySelector('#registTrip').addEventListener('click', async (e) => {
         let res = await addBalance(e, DEFAULT_TRIP_VALUE)
-        //Registry trip analytics
+        // Registry trip analytics
         if (res) {
             const userId = document.getElementById('userId').value
             await fetch('http://localhost:8000/api/registeredtrips', {
@@ -161,6 +165,19 @@ window.onload = async () => {
                 headers: { 'Content-type': 'application/json; charset=UTF-8' }
             })
         }
+    })
+
+    document.querySelector('#deleteStation').addEventListener('click', async () => {
+        const stationId = document.querySelector('#deleteStation').getAttribute('data-station')
+        const res = await fetch('http://localhost:8000/api/frequentstations/' + document.getElementById('userId').value, {
+            method: 'DELETE',
+            body: JSON.stringify({ stationId }),
+            headers: { 'Content-type': 'application/json; charset=UTF-8', Authorization: 'Bearer ' + document.querySelector('#token').value }
+        })
+
+        document.querySelector('#toastText').innerText = res.ok ? 'Estação eliminada com sucesso.' : 'Ocorreu um erro.'
+        toast.show()
+        res.ok && window.location.reload()
     })
 
     async function addBalance(e, tripBalance = null) {

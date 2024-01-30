@@ -125,6 +125,8 @@
                     <p class="text"></p>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        id="deleteStation">Eliminar</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         id="closeModalStation">Fechar</button>
                 </div>

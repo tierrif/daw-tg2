@@ -44,9 +44,9 @@ window.onload = async () => {
             return document.querySelector('#datalistError').classList.remove('hidden')
         }
 
-        //Add to analytics
-        let stationId = station.id
-        let response = await fetch('http://localhost:8000/api/stationsearch', {
+        // Add to analytics
+        const stationId = station.id
+        await fetch('http://localhost:8000/api/stationsearch', {
             method: 'POST',
             body: JSON.stringify({ 'station_id': stationId, 'userAgent': window.navigator.userAgent }),
             headers: { 'Content-type': 'application/json; charset=UTF-8' }

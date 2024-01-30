@@ -39,7 +39,6 @@ class FrequentStationsController extends Controller
 
     public function destroy(Request $request, string $userId)
     {
-        // TODO: implement in frontend
         $stationId = $request->input('stationId');
         if ($userId == '' || $stationId == '') {
             return response('Some fields were not fulfilled!', Response::HTTP_BAD_REQUEST);
