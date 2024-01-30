@@ -5,14 +5,22 @@ window.onload = async () => {
     if (url === '') {
         url = 'homepage'
     }
-    let response = await fetch('http://localhost:8000/api/websitevisitors', {
+
+    await fetch('http://localhost:8000/api/websitevisitors', {
         method: 'POST',
         body: JSON.stringify({ 'url_visited': url, 'userAgent': window.navigator.userAgent }),
         headers: { 'Content-type': 'application/json; charset=UTF-8' }
     })
 
     // Add line states to all lines.
-    const { resposta: lines } = await (await fetch('http://localhost:8000/api/line')).json()
+    let { resposta: lines } = await (await fetch('http://localhost:8000/api/line')).json()
+    console.log(lines)
+    if (lines === 'Circulação encerrada') {
+        lines = JSON.parse(document.querySelector('#lines').value).map((l) => ({ [l.stringId]: ' Circulação Encerrada' }))
+            .reduce((a, b) => ({ ...a, ...b }))
+    }
+    console.log(lines)
+
     Object.entries(lines).splice(0, 4).forEach(([lineName, lineStatus]) => {
         const checkmark = document.querySelector(`.${lineName} .checkmark`)
         checkmark.setAttribute('data-bs-title', 'Estado:' + lineStatus)
