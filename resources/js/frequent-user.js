@@ -132,9 +132,12 @@ window.onload = async () => {
             return toast.show()
         }
 
+        console.log(document.querySelector('#token').value)
+
         const response = await fetch(`http://127.0.0.1:8000/api/frequentstations/`, {
             method: 'POST', body: JSON.stringify({ userId, stationId }),
-            headers: { 'Content-type': 'application/json; charset=UTF-8' }
+            headers: { 'Content-type': 'application/json; charset=UTF-8',
+                'Authorization': 'Bearer ' + document.querySelector('#token').value }
         })
 
         if (!response.ok) {
@@ -147,7 +150,6 @@ window.onload = async () => {
         window.location.reload()
     })
 
-    // TODO: change the button layout PLEASE
     document.querySelector('#registTrip').addEventListener('click', async (e) => {
         let res = await addBalance(e, DEFAULT_TRIP_VALUE)
         //Registry trip analytics
@@ -155,7 +157,7 @@ window.onload = async () => {
             const userId = document.getElementById('userId').value
             await fetch('http://localhost:8000/api/registeredtrips', {
                 method: 'POST',
-                body: JSON.stringify({ 'userId': userId, 'userAgent': window.navigator.userAgent }),
+                body: JSON.stringify({ userId, userAgent: window.navigator.userAgent }),
                 headers: { 'Content-type': 'application/json; charset=UTF-8' }
             })
         }
@@ -187,7 +189,7 @@ window.onload = async () => {
         const updateBalance =
             await fetch(`http://127.0.0.1:8000/api/balance/${document.getElementById('userId').value}`, {
                 method: 'PUT', body: JSON.stringify({ 'balance': parseFloat(tripBalance ? -balanceValue : balanceValue) }),
-                headers: { 'Content-type': 'application/json; charset=UTF-8' }
+                headers: { 'Content-type': 'application/json; charset=UTF-8', Authorization: 'Bearer ' + document.querySelector('#token').value }
             })
 
         if (updateBalance.ok) {

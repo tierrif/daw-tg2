@@ -8,7 +8,6 @@ use App\Models\Station;
 use App\Models\StationSearchAnalyticsModel;
 use App\Models\User;
 use App\Models\WebsiteVisitorsAnalyticsModel;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -40,11 +39,12 @@ class FrequentUserController extends Controller
 
         return view('pages.frequent-user', [
             'username' => $name, 'userId' => $user['id'], 'lines' => $lines,
-            'balance' => $balance, 'frequentStations' => $frequentStations, 'allStations' => $filterStations
+            'balance' => $balance, 'frequentStations' => $frequentStations, 'allStations' => $filterStations,
+            'token' => $user->createToken('main', ['server:update'])->plainTextToken,
         ]);
     }
 
-    function adminPanel()
+    private function adminPanel()
     {
         $stationsSearch = count(StationSearchAnalyticsModel::all());
         $visitorsCount = count(WebsiteVisitorsAnalyticsModel::all());

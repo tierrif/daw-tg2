@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\RegisteredTripsAnalyticsModel;
-use App\Models\WebsiteVisitorsAnalyticsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,12 +17,13 @@ class WebsiteVisitorsAnalyticsController extends Controller
     {
         $urlVisited = $request->input('url_visited');
         $userAgent = $request->input('userAgent');
-        DB::table('website_visitors_analytics')->insert(['url_visited' => $urlVisited, 'user_agent' => $userAgent, 'created_at' => date('Y-m-d H:i:s')]);
-        return response("Insert with success");
-    }
 
-    public function show(string $id)
-    {
-        return WebsiteVisitorsAnalyticsModel::all()->firstWhere('id', $id);
+        DB::table('website_visitors_analytics')->insert([
+            'url_visited' => $urlVisited,
+            'user_agent' => $userAgent,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        return response('Inserted with success');
     }
 }

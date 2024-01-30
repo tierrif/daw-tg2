@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Logging\Exception;
 
@@ -12,10 +11,10 @@ class LineController extends Controller
     {
         $token = getenv('METRO_LISBOA_TOKEN');
 
-        if (!$token) throw new Exception('The Metro\'s API is required in order to seed the database. '
+        if (!$token) throw new Exception('The Metro\'s API is required. '
             . 'Please set the METRO_LISBOA_TOKEN environment variable.');
         $response = Http::withOptions(['verify' => false])
-            ->withHeader('Authorization', 'Bearer '.$token)->acceptJson()
+            ->withHeader('Authorization', 'Bearer ' . $token)->acceptJson()
             ->get('https://api.metrolisboa.pt:8243/estadoServicoML/1.0.1/estadoLinha/todos')
             ->json();
 

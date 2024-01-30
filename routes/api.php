@@ -26,14 +26,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::middleware('auth:sanctum')->group( function () {
-
-//});
-
 Route::resource('line', LineController::class);
 Route::resource('station', StationController::class);
-Route::resource('balance', BalanceController::class);
-Route::resource('frequentstations', FrequentStationsController::class);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::resource('frequentstations', FrequentStationsController::class);
+    Route::resource('balance', BalanceController::class);
+});
+
 Route::resource('destination', DestinationController::class);
 Route::resource('registeredtrips', RegisteredTripsAnalyticsController::class);
 Route::resource('stationsearch', StationSearchAnalyticsController::class);

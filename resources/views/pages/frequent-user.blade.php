@@ -147,4 +147,5 @@
 
     <input id="balanceInitialValue" type="hidden" value="{{ $balance }}" />
     <input id="frequent-stations-data" type="hidden" value="{{ json_encode($frequentStations) }}" />
+    <input id="token" type="hidden" value={{ $token }} />
 @endsection

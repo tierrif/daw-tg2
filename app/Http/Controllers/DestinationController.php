@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Destination;
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
 class DestinationController extends Controller
 {
